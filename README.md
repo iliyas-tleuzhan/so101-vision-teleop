@@ -12,39 +12,29 @@ All robot motion is directly driven by a human operator’s hand movement and is
 
 ### The project is designed as a **portfolio-quality robotics system** demonstrating computer vision, embedded control, networking, and safety-aware software architecture.
 
-## Project goals
+## Project goal
 The primary goal of this project is to build a **robust, safe, and understandable teleoperation system** suitable for a robotics and computer engineering portfolio.
 
-This project aims to demonstrate:
-1) End-to-end hardware–software integration  
-2) Real-time computer vision applied to robotics  
-3) Networked control of physical systems  
-4) Safety-first embedded system design  
-5) Structured logging and reproducibility  
-
 ---
+## Hardware topology
+Laptop (Windows)
+  - Webcam
+  - Hand tracking + mapping
+  - TCP command sender
+    
+        TCP (NDJSON)
 
-## Design principles
-The system is intentionally designed around the following principles:
+### Raspberry Pi 5
+  - Safety + validation
+  - Logging + replay
+  - Dynamixel SDK
 
-1) **Safety before performance**  
-   - All safety decisions are enforced on the Raspberry Pi  
-   - The laptop is never trusted to directly control hardware  
+        USB ↔ TTL adapter (/dev/ttyUSB*)
 
-2) **Simplicity over complexity (v1)**  
-   - No inverse kinematics  
-   - No autonomous behavior  
-   - Feature-based control instead of full pose estimation  
+### TTL smart servo bus (IDs 1–6)
+  - External power supply
+### Key notes:
+   - Laptop and Pi must be on the same network.
+   - Servos require external power (USB is insufficient).
+   - Servo power ground must be shared with the USB↔TTL adapter.
 
-3) **Clear separation of responsibilities**  
-   - Laptop: perception, intent generation  
-   - Raspberry Pi: validation, safety, actuation  
-
-4) **Modularity and readability**  
-   - Small, focused modules  
-   - Configuration-driven behavior  
-   - Code intended to be read and modified  
-
-5) **Reproducibility**  
-   - Every session can be logged  
-   - Logged motion can be replayed deterministically  
