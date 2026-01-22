@@ -38,3 +38,45 @@ Laptop (Windows)
    - Servos require external power (USB is insufficient).
    - Servo power ground must be shared with the USB↔TTL adapter.
 
+## Operator controls
+Keyboard input is handled on the laptop while the application window is focused.
+
+Controls:
+- `e` — emergency stop (torque off)
+- `t` — toggle torque enable
+- `h` — move to safe home pose
+- `q` — quit application
+
+Emergency stop should always be tested before enabling motion.
+
+## Setup
+
+### Laptop (Windows)
+1) Create venv and install dependencies:
+```bash
+python -m venv .venv
+.\.venv\Scripts\activate
+pip install -r laptop/requirements.txt
+Set the Raspberry Pi IP in config/network.yaml
+```
+2) Run:
+```bash
+python laptop/app.py
+```
+
+### Raspberry Pi
+1) Add user to serial group:
+```bash
+sudo usermod -aG dialout $USER
+sudo reboot
+```
+2) Create venv and install dependencies:
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r pi/requirements.txt
+```
+3) Configure config/dynamixel.yaml, then run:
+```bash
+python pi/server.py
+```
