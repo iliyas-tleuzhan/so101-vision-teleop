@@ -1,0 +1,10 @@
+tcp:
+  pi_host: "192.168.1.50"   # <-- set to your Pi IP
+  pi_port: 5566
+  send_hz: 30               # v1: 20–30 is stable
+  stale_timeout_s: 0.35     # Pi: if no fresh cmd, hold/stop
+  hard_stop_timeout_s: 1.00 # Pi: if still stale, torque off (optional)
+
+protocol:
+  # NDJSON over TCP: each message is one JSON line terminated by '\n'
+  framing: "ndjson"

@@ -1,0 +1,67 @@
+# Hand feature -> joint mapping (v1: simple, robust, no IK)
+
+# Assumed joint meaning (edit to match your arm):
+# 1: base yaw
+# 2: shoulder pitch
+# 3: elbow pitch
+# 4: wrist pitch
+# 5: wrist roll
+# 6: gripper
+
+# Feature ranges are normalized ~[0..1] where possible.
+# Each joint target is computed as:
+#   target = center + gain * (feature - feature_center)
+# then optionally inverted, then clamped to calibration limits.
+
+features:
+  # deadzones reduce jitter around neutral
+  deadzone_wrist_xy: 0.03
+  deadzone_roll: 0.05
+  deadzone_pinch: 0.04
+
+  # smoothing factor (EMA): higher = smoother, more lag
+  ema_alpha: 0.65
+
+confidence_gate:
+  min_confidence: 0.60      # below this: hold last safe command OR stop sending
+  hold_last_on_low_conf: true
+
+mapping:
+  joint_1_base_yaw:
+    feature: wrist_x
+    feature_center: 0.50
+    gain: 1.00
+    invert: false
+
+  joint_2_shoulder:
+    feature: wrist_y
+    feature_center: 0.55
+    gain: 0.90
+    invert: true
+
+  joint_3_elbow:
+    feature: wrist_y
+    feature_center: 0.55
+    gain: 0.60
+    invert: false
+
+  joint_4_wrist_pitch:
+    feature: index_mcp_y
+    feature_center: 0.55
+    gain: 0.80
+    invert: true
+
+  joint_5_wrist_roll:
+    feature: roll
+    feature_center: 0.50
+    gain: 0.70
+    invert: false
+
+  joint_6_gripper:
+    feature: pinch
+    feature_center: 0.35
+    gain: 1.20
+    invert: false
+
+# Optional per-joint soft limits inside calibration limits (safer v1)
+soft_limit_margin_ticks: 20

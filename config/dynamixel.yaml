@@ -1,0 +1,19 @@
+dynamixel:
+  device: "/dev/ttyUSB0"     # <-- Pi side (or /dev/ttyACM0 etc.)
+  baudrate: 1000000          # <-- change to match your servos
+  protocol_version: 2.0      # <-- 1.0 or 2.0
+
+control_table:
+  # Defaults for many Protocol 2.0 servos (X-series / MX2, etc.)
+  addr_torque_enable: 64
+  addr_operating_mode: 11
+  addr_goal_position: 116
+  addr_present_position: 132
+
+  # Byte lengths for Protocol 2.0
+  len_goal_position: 4
+  len_present_position: 4
+
+behavior:
+  enable_present_read: false
+  present_read_hz: 10
