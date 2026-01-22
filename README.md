@@ -1,21 +1,13 @@
-# SO-101 Vision Teleoperation
+# SO101 Vision-Assisted Teleoperation
+**Vision-assisted hand-tracking teleoperation for the LeRobot SO101 robotic arm**
 
-Vision-based hand teleoperation for the LeRobot SO-101 robotic arm.
+This project implements a **real-time, vision-assisted teleoperation system** for a 6-DOF LeRobot SO101 robotic arm using:
+1) Laptop-side computer vision (MediaPipe Hands)
+2) Network-based command streaming
+3) Raspberry Pi 5 as a safety-critical robot controller
+4) Dynamixel-style smart servos on a TTL serial bus
 
-## Architecture
-Laptop:
-Webcam → MediaPipe → Hand Features → Joint Mapping → TCP Stream
+This system is **not autonomous**.  
+All robot motion is directly driven by a human operator’s hand movement and is continuously supervised by safety constraints on the Raspberry Pi.
 
-Raspberry Pi:
-TCP Receiver → Safety Layer → Dynamixel Driver → Servos
-
-## Requirements
-- Laptop: Python 3.10+, webcam
-- Raspberry Pi 5
-- SO-101 arm (IDs 1–6)
-
-## Run
-Laptop:
-```bash
-pip install -r laptop/requirements.txt
-python laptop/app.py
+The project is designed as a **portfolio-quality robotics system** demonstrating computer vision, embedded control, networking, and safety-aware software architecture.
